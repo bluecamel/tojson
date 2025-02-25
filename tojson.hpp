@@ -3,7 +3,7 @@
 #include <yaml-cpp/yaml.h>
 #include <rapidxml.hpp>
 
-#include <nlohman/json.hpp>
+#include <nlohmann/json.hpp>
 
 #include <fstream>
 
