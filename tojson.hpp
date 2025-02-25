@@ -151,13 +151,13 @@ inline void toxml(const nlohmann::json &j,
   // Not the prettiest of designs, but it works fine.
 	for (auto it = j.begin(); it != j.end(); ++it) {
 		if (it->is_object()) {
-			auto *node = doc.allocate_node(rapidxml::node_element, doc.allocate_string(it.key().data()));
+			auto *node = doc.allocate_node(rapidxml::node_type::node_element, doc.allocate_string(it.key().data()));
 			detail::toxml(*it, doc, node);
 			parent->append_node(node);
 		} else if (it->is_array()) {
 			detail::toxml(*it, doc, parent, key);
 		} else {
-			auto *node = doc.allocate_node(rapidxml::node_element, doc.allocate_string(key.data()));
+			auto *node = doc.allocate_node(rapidxml::node_type::node_element, doc.allocate_string(key.data()));
 			node->value(doc.allocate_string(repr(it.value()).data()));
 			parent->append_node(node);
 		}
@@ -168,13 +168,13 @@ inline void toxml(const nlohmann::json &j,
 inline void toxml(const nlohmann::json &j, rapidxml::xml_document<> &doc, rapidxml::xml_node<> *parent) {
 	for (auto it = j.begin(); it != j.end(); ++it) {
 		if (it->is_object()) {
-			auto *node = doc.allocate_node(rapidxml::node_element, doc.allocate_string(it.key().data()));
+			auto *node = doc.allocate_node(rapidxml::node_type::node_element, doc.allocate_string(it.key().data()));
 			detail::toxml(*it, doc, node);
 			parent->append_node(node);
 		} else if (it->is_array()) {
 			detail::toxml(*it, doc, parent, it.key());
 		} else {
-			auto *node = doc.allocate_node(rapidxml::node_element, doc.allocate_string(it.key().data()));
+			auto *node = doc.allocate_node(rapidxml::node_type::node_element, doc.allocate_string(it.key().data()));
 			node->value(doc.allocate_string(repr(it.value()).data()));
 			parent->append_node(node);
 		}
@@ -245,7 +245,7 @@ TOJSON_NODISCARD inline std::string toxml(const nlohmann::json &j) {
 	doc.append_node(decl);
 
 	if (j.is_object() && j.size() == 1) {
-		auto *root = doc.allocate_node(rapidxml::node_element, doc.allocate_string(j.begin().key().data()));
+		auto *root = doc.allocate_node(rapidxml::node_type::node_element, doc.allocate_string(j.begin().key().data()));
 		detail::toxml(j.begin().value(), doc, root);
 		doc.append_node(root);
 	} else {
