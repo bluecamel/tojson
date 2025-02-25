@@ -239,7 +239,7 @@ TOJSON_NODISCARD inline std::string toyaml(const nlohmann::json &j) {
 /// \throws std::runtime_error if the object have more than one root
 TOJSON_NODISCARD inline std::string toxml(const nlohmann::json &j) {
 	rapidxml::xml_document<> doc;
-	auto *decl = doc.allocate_node(rapidxml::node_declaration);
+	auto *decl = doc.allocate_node(rapidxml::node_type::node_declaration);
 	decl->append_attribute(doc.allocate_attribute("version", "1.0"));
 	decl->append_attribute(doc.allocate_attribute("encoding", "utf-8"));
 	doc.append_node(decl);
